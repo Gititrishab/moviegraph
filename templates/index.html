@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MovieGraph — Discover Movies</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+            <span class="brand-icon">🎬</span>
+            <span>MovieGraph</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="#movies">
+                Discover
+            </a>
+
+            <a href="#top-rated">
+                Top Rated
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                ✦ GRAPH-POWERED MOVIE DISCOVERY
+            </div>
+
+            <h1>
+                Discover movies through
+                <span>connections.</span>
+            </h1>
+
+            <p class="hero-text">
+                Explore movies, actors, directors and genres
+                connected through a knowledge graph powered
+                by CognoDB.
+            </p>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+                <label
+                    for="searchInput"
+                    class="sr-only"
+                >
+                    Search movies
+                </label>
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search for a movie..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="searchButton"
+                    type="button"
+                >
+                    Search
+                </button>
+
+            </div>
+
+
+            <div class="hero-stats">
+
+                <div>
+                    <strong>15+</strong>
+                    <span>Movies</span>
+                </div>
+
+                <div>
+                    <strong>∞</strong>
+                    <span>Connections</span>
+                </div>
+
+                <div>
+                    <strong>AI</strong>
+                    <span>Recommendations</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN -->
+
+    <main id="movies" class="main-content">
+
+
+        <!-- SEARCH RESULT TITLE -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    MOVIE LIBRARY
+                </p>
+
+                <h2 id="sectionTitle">
+                    All Movies
+                </h2>
+
+            </div>
+
+            <span
+                id="movieCount"
+                class="movie-count"
+            ></span>
+
+        </div>
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loading"
+            class="loading-state hidden"
+        >
+
+            <div class="skeleton-grid">
+
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOVIE GRID -->
+
+        <div
+            id="movieGrid"
+            class="movie-grid"
+        ></div>
+
+
+        <!-- EMPTY -->
+
+        <div
+            id="emptyState"
+            class="state hidden"
+        >
+
+            <div class="state-icon">
+                🎬
+            </div>
+
+            <h3>
+                No movies found
+            </h3>
+
+            <p>
+                Try another movie title.
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorState"
+            class="state hidden"
+        >
+
+            <div class="state-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Something went wrong
+            </h3>
+
+            <p id="errorMessage">
+                Unable to load movies.
+            </p>
+
+        </div>
+
+
+        <!-- TOP RATED -->
+
+        <section id="top-rated" class="top-rated-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        COMMUNITY FAVORITES
+                    </p>
+
+                    <h2>
+                        Top Rated
+                    </h2>
+
+                </div>
+
+                <span class="section-symbol">
+                    ⭐
+                </span>
+
+            </div>
+
+            <div
+                id="topRatedGrid"
+                class="movie-grid"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-brand">
+            🎬 MovieGraph
+        </div>
+
+        <p>
+            Explore the graph behind your favorite movies.
+        </p>
+
+        <span>
+            Powered by CognoDB · Flask · Cypher
+        </span>
+
+    </footer>
+
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+</body>
+
+</html>

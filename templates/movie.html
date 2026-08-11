@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MovieGraph</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎬 MovieGraph
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                ← Back to Movies
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN MOVIE PAGE -->
+
+    <main class="movie-page">
+
+
+        <!-- LOADING -->
+
+        <div
+            id="movieLoading"
+            class="state"
+        >
+
+            <div class="loader"></div>
+
+            <p>
+                Loading movie...
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="movieError"
+            class="state hidden"
+        >
+
+            <div class="empty-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Unable to load movie
+            </h3>
+
+            <p id="movieErrorMessage">
+                Something went wrong.
+            </p>
+
+        </div>
+
+
+        <!-- MOVIE CONTENT -->
+
+        <section
+            id="movieContent"
+            class="hidden"
+        >
+
+
+            <!-- =====================================
+                 MOVIE HERO
+            ====================================== -->
+
+            <section class="movie-hero">
+
+
+                <!-- LEFT SIDE -->
+
+                <div class="movie-hero-info">
+
+                    <p class="section-label">
+                        MOVIE
+                    </p>
+
+
+                    <h1 id="movieTitle">
+                        Loading...
+                    </h1>
+
+
+                    <div class="movie-meta">
+
+                        <span id="movieRating">
+                            ⭐ —
+                        </span>
+
+                        <span id="movieYear">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <p id="movieDescription">
+                        Loading movie description...
+                    </p>
+
+
+                    <div
+                        id="genres"
+                        class="genre-tags"
+                    ></div>
+
+                </div>
+
+
+                <!-- RIGHT SIDE POSTER -->
+
+                <div class="movie-poster-large">
+
+                    <img
+                        id="moviePoster"
+                        src=""
+                        alt="Movie poster"
+                    >
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =====================================
+                 MOVIE INFORMATION
+            ====================================== -->
+
+            <div class="info-grid">
+
+
+                <!-- GENRES -->
+
+                <div class="info-card">
+
+                    <p class="info-label">
+                        GENRES
+                    </p>
+
+                    <div
+                        id="genreInfo"
+                        class="tag-container"
+                    ></div>
+
+                </div>
+
+
+                <!-- DIRECTOR -->
+
+                <div class="info-card">
+
+                    <p class="info-label">
+                        DIRECTOR
+                    </p>
+
+                    <div id="directors"></div>
+
+                </div>
+
+
+                <!-- CAST -->
+
+                <div class="info-card">
+
+                    <p class="info-label">
+                        CAST
+                    </p>
+
+                    <div id="actors"></div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =====================================
+                 KNOWLEDGE GRAPH
+            ====================================== -->
+
+            <section class="graph-section">
+
+
+                <div class="section-header">
+
+                    <p class="section-label">
+                        KNOWLEDGE GRAPH
+                    </p>
+
+                    <h2>
+                        Movie Connections
+                    </h2>
+
+                    <p class="recommendation-description">
+                        Explore how this movie connects
+                        to actors, directors and genres.
+                    </p>
+
+                </div>
+
+
+                <div id="movieGraph"></div>
+
+
+                <!-- GRAPH LEGEND -->
+
+                <div class="graph-legend">
+
+
+                    <div class="legend-item">
+
+                        <span
+                            class="legend-dot movie-dot"
+                        ></span>
+
+                        Movie
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span
+                            class="legend-dot actor-dot"
+                        ></span>
+
+                        Actor
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span
+                            class="legend-dot director-dot"
+                        ></span>
+
+                        Director
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span
+                            class="legend-dot genre-dot"
+                        ></span>
+
+                        Genre
+
+                    </div>
+
+
+                </div>
+
+
+                <p class="graph-explanation">
+
+                    This graph shows how the selected
+                    movie is connected to actors,
+                    directors and genres in CognoDB.
+                    These relationships are also used
+                    to generate recommendations.
+
+                </p>
+
+
+            </section>
+
+
+            <!-- =====================================
+                 RECOMMENDATIONS
+            ====================================== -->
+
+            <section class="recommendation-section">
+
+
+                <div class="section-header">
+
+                    <p class="section-label">
+                        GRAPH CONNECTIONS
+                    </p>
+
+                    <h2>
+                        Movies You May Like
+                    </h2>
+
+                    <p class="recommendation-description">
+
+                        Recommendations are discovered
+                        by following relationships in
+                        the movie graph.
+
+                    </p>
+
+                </div>
+
+
+                <!-- GRAPH RECOMMENDATIONS -->
+
+                <div class="recommendation-group">
+
+                    <h3>
+                        🔗 Graph Recommendations
+                    </h3>
+
+                    <p class="recommendation-hint">
+
+                        Recommendations ranked using
+                        shared actors and genres.
+
+                    </p>
+
+
+                    <div
+                        id="actorRecommendations"
+                        class="recommendation-grid"
+                    ></div>
+
+                </div>
+
+
+                <!-- WHY THESE MOVIES -->
+
+                <div class="recommendation-group">
+
+                    <h3>
+                        📊 Why These Movies?
+                    </h3>
+
+                    <p class="recommendation-hint">
+
+                        Each recommendation shows the
+                        graph connections used to
+                        calculate its score.
+
+                    </p>
+
+
+                    <div
+                        id="genreRecommendations"
+                        class="recommendation-grid"
+                    ></div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =====================================
+                 WHY GRAPH DATABASE
+            ====================================== -->
+
+            <section class="why-graph-section">
+
+
+                <p class="section-label">
+                    WHY A GRAPH DATABASE?
+                </p>
+
+
+                <h2>
+                    Recommendations through relationships
+                </h2>
+
+
+                <p>
+
+                    MovieGraph uses CognoDB to represent
+                    movies, actors, directors and genres
+                    as connected nodes.
+
+                    Recommendations can then traverse
+                    these relationships directly instead
+                    of relying on many relational joins.
+
+                </p>
+
+
+                <div class="graph-path-example">
+
+                    <span>
+                        Movie
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                    <span>
+                        Actor
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                    <span>
+                        Related Movie
+                    </span>
+
+                </div>
+
+
+                <div class="graph-path-example">
+
+                    <span>
+                        Movie
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                    <span>
+                        Genre
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                    <span>
+                        Related Movie
+                    </span>
+
+                </div>
+
+
+            </section>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            MovieGraph · Powered by graph relationships
+        </p>
+
+    </footer>
+
+
+    <!-- MOVIE TITLE -->
+
+    <script>
+        const movieTitle = "{{ title }}";
+    </script>
+
+
+    <!-- CYTOSCAPE -->
+
+    <script
+        src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"
+    ></script>
+
+
+    <!-- MOVIE JAVASCRIPT -->
+
+    <script
+        src="{{ url_for('static', filename='movie.js') }}"
+    ></script>
+
+
+</body>
+
+</html>
